@@ -13,6 +13,7 @@
 			result="flowScope.registerModel" />
 	</on-start>
 
+	<!--	signup-flow.xml 中，虽然没有显式声明哪个状态是起始状态，但 Web Flow 默认将第一个定义的 <view-state> 作为流程的起点-->
 	<!-- is the start state -->
 	<view-state id="personal" view="flows/register/signup-personal" model="personalInfo">
 		<transition on="billing" to="validatePersonal" />

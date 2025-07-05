@@ -3,6 +3,7 @@ package com.example.demo.config;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
@@ -101,5 +102,22 @@ public class WebFlowWithMvcConfig extends AbstractFlowConfiguration {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setTemplateResolver(this.templateResolver());
 		return templateEngine;
+	}
+
+
+	// WebFlow 的默认行为：
+	// Flow ID 是基于 Flow 文件所在的目录结构生成的。
+	// 如果 Flow 文件位于 flows/register/ 目录中，Flow ID 就会是 register。
+	// 所有访问 /register ，就会进入流 flows/register/signup-flow.xml
+	//
+	@Bean
+	public ApplicationRunner printRegisteredFlows(FlowDefinitionRegistry flowRegistry) {
+		return args -> {
+			System.out.println("=== Registered Flow IDs ===");
+			for (String flowDefinitionId : flowRegistry.getFlowDefinitionIds()) {
+				System.out.println("flowDefinitionId = " + flowDefinitionId);
+			}
+			System.out.println("==========================");
+		};
 	}
 }
